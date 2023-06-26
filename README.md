@@ -10,7 +10,7 @@ Recreation of Amazon main page to master JavaScript
 
 ## Live Preview
 
-Available soon!
+[jaqubm.dev/JavaScript_learning](https://jaqubm.dev/JavaScript_learning/)
 
 ## Preview
 
