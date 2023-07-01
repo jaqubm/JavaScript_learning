@@ -53,12 +53,12 @@ cart.forEach(item => {
           </div>
         </div>
 
-        <div class="delivery-options">
+        <div class="delivery-options js-delivery">
           <div class="delivery-options-title">
             Choose a delivery option:
           </div>
           <div class="delivery-option">
-            <input type="radio" checked class="delivery-option-input" name="delivery-option" value="0">
+            <input type="radio" checked class="delivery-option-input" name="delivery-option">
             <div>
               <div class="delivery-option-date">
                 Tuesday, June 21
@@ -69,7 +69,7 @@ cart.forEach(item => {
             </div>
           </div>
           <div class="delivery-option">
-            <input type="radio" class="delivery-option-input" name="delivery-option" value="4.99">
+            <input type="radio" class="delivery-option-input" name="delivery-option">
             <div>
               <div class="delivery-option-date">
                 Wednesday, June 15
@@ -80,7 +80,7 @@ cart.forEach(item => {
             </div>
           </div>
           <div class="delivery-option">
-            <input type="radio" class="delivery-option-input" name="delivery-option" value="9.99">
+            <input type="radio" class="delivery-option-input" name="delivery-option">
             <div>
               <div class="delivery-option-date">
                 Monday, June 13
@@ -99,6 +99,9 @@ cart.forEach(item => {
 let totalBefore = itemsPrice + deliveryPrice;
 let tax = parseFloat(totalBefore / 10).toFixed(2);
 let total = parseFloat(totalBefore + totalBefore / 10).toFixed(2);
+
+itemsPrice = parseFloat(itemsPrice).toFixed(2);
+totalBefore = parseFloat(totalBefore).toFixed(2);
 
 let summaryHTML = `
   <div class="payment-summary-title">
@@ -139,5 +142,6 @@ if(itemCounter === 1)
   document.querySelector('.js-counter').innerHTML = `${itemCounter} item`;
 else
   document.querySelector('.js-counter').innerHTML = `${itemCounter} items`;
+  
 document.querySelector('.js-order-summary').innerHTML = checkoutHTML;
 document.querySelector('.js-payment-summary').innerHTML = summaryHTML;
