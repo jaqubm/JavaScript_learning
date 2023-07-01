@@ -51,6 +51,7 @@ Temporary Items
 .ionide
 
 ### VisualStudioCode ###
+.vscode
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
