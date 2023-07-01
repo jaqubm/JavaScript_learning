@@ -46,8 +46,7 @@ products.forEach(product => {
         Added
       </div>
 
-      <button class="add-to-cart-button button-primary js-add-to-card"
-      data-product-id="${product.id}">
+      <button class="add-to-cart-button button-primary js-add-to-card" data-product-id="${product.id}">
         Add to Cart
       </button>
     </div>
@@ -95,4 +94,8 @@ document.querySelectorAll('.js-add-to-card').forEach((button) => {
 
     document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
   });
+});
+
+document.querySelector('.cart-link').addEventListener('click', () => {
+  sessionStorage.setItem('cart', JSON.stringify(cart));
 });
