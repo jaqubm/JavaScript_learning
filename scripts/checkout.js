@@ -1,8 +1,10 @@
-const cartLoad = JSON.parse(sessionStorage.getItem('cart'));
+try {
+  const cartLoad = JSON.parse(sessionStorage.getItem('cart'));
 
-cartLoad.forEach(item => {
-  cart.push(item);
-});
+  cartLoad.forEach(item => {
+    cart.push(item);
+  });
+} catch(e){};
 
 let checkoutHTML = '';
 

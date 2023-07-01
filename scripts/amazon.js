@@ -1,3 +1,11 @@
+try {
+  const cartLoad = JSON.parse(sessionStorage.getItem('cart'));
+
+  cartLoad.forEach(item => {
+    cart.push(item);
+  });
+} catch(e){};
+
 let productsHTML = '';
 
 products.forEach(product => {
