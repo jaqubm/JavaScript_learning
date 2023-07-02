@@ -14,6 +14,10 @@
     <link rel="stylesheet" href="styles/shared/general.css">
     <link rel="stylesheet" href="styles/shared/amazon-header.css">
     <link rel="stylesheet" href="styles/pages/orders.css">
+
+    <script src="data/cart.js" defer></script>
+    <script src="data/products.js" defer></script>
+    <script src="scripts/orders.js" defer></script>
   </head>
   <body>
     <div class="amazon-header">
@@ -42,7 +46,7 @@
 
         <a class="cart-link header-link" href="checkout.html">
           <img class="cart-icon" src="images/icons/cart-icon.png">
-          <div class="cart-quantity">3</div>
+          <div class="cart-quantity js-cart-quantity"></div>
           <div class="cart-text">Cart</div>
         </a>
       </div>
