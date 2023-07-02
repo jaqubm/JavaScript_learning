@@ -4,8 +4,6 @@ try {
   cartLoad.forEach(item => {
     cart.push(item);
   });
-
-  sessionStorage.removeItem('cart');
 } catch(e) {};
 
 let productsHTML = '';
@@ -107,5 +105,6 @@ document.querySelectorAll('.js-add-to-card').forEach((button) => {
 });
 
 window.addEventListener('beforeunload', () => {
+  sessionStorage.removeItem('cart');
   sessionStorage.setItem('cart', JSON.stringify(cart));
 });
