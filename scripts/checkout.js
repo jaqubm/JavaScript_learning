@@ -5,17 +5,19 @@ try {
     cart.push({
       productId: item.productId,
       quantity: item.quantity,
-      delivery: 0
+      delivery: item.delivery
     });
   });
-} catch(e){};
 
-let checkoutHTML = '';
+  sessionStorage.removeItem('cart');
+} catch(e) {};
+
+let cartHTML = '';
 
 let itemCounter = 0;
 let itemsPrice = 0;
 
-cart.forEach(item => {
+const orderSummary = () => cart.forEach(item => {
   let matchingProduct;
 
   products.forEach((product) => {
@@ -27,7 +29,7 @@ cart.forEach(item => {
   itemCounter++;
   itemsPrice += matchingProduct.priceCents * item.quantity;
 
-  checkoutHTML += `
+  cartHTML += `
     <div class="cart-item-container">
       <div class="delivery-date">
         Delivery date: Tuesday, June 21
@@ -61,7 +63,7 @@ cart.forEach(item => {
             Choose a delivery option:
           </div>
           <div class="delivery-option">
-            <input type="radio" checked class="delivery-option-input" name="delivery-option-${item.productId}" value="0">
+            <input type="radio" ${item.delivery === 0 ? "checked" : ""} class="delivery-option-input" name="delivery-option-${item.productId}" value="0">
             <div>
               <div class="delivery-option-date">
                 Tuesday, June 21
@@ -72,7 +74,7 @@ cart.forEach(item => {
             </div>
           </div>
           <div class="delivery-option">
-            <input type="radio" class="delivery-option-input" name="delivery-option-${item.productId}" value="499">
+            <input type="radio" ${item.delivery === 499 ? "checked" : ""} class="delivery-option-input" name="delivery-option-${item.productId}" value="499">
             <div>
               <div class="delivery-option-date">
                 Wednesday, June 15
@@ -83,7 +85,7 @@ cart.forEach(item => {
             </div>
           </div>
           <div class="delivery-option">
-            <input type="radio" class="delivery-option-input" name="delivery-option-${item.productId}" value="999">
+            <input type="radio" ${item.delivery === 999 ? "checked" : ""} class="delivery-option-input" name="delivery-option-${item.productId}" value="999">
             <div>
               <div class="delivery-option-date">
                 Monday, June 13
@@ -99,12 +101,14 @@ cart.forEach(item => {
   `;
 });
 
+orderSummary();
+
 if(itemCounter === 1)
   document.querySelector('.js-counter').innerHTML = `${itemCounter} item`;
 else
   document.querySelector('.js-counter').innerHTML = `${itemCounter} items`;
   
-document.querySelector('.js-order-summary').innerHTML = checkoutHTML;
+document.querySelector('.js-order-summary').innerHTML = cartHTML;
 
 cart.forEach((item) => {
   if(document.querySelector(`input[name="delivery-option-${item.productId}"]`)) {
@@ -166,3 +170,7 @@ const deliveryCalc = () => {
 }
 
 deliveryCalc();
+
+window.addEventListener('beforeunload', () => {
+  sessionStorage.setItem('cart', JSON.stringify(cart));
+});
