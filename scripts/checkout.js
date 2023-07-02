@@ -39,6 +39,7 @@ const cartFunctions = () => {
 const orderSummary = () => {
   itemCounter = 0;
   itemsPrice = 0;
+  
   let cartHTML = '';
 
   cart.forEach(item => {
@@ -139,6 +140,7 @@ const orderSummary = () => {
 //Calculating delivery costs + inserting them into HTML
 const deliveryCalc = () => {
   let deliveryPrice = 0;
+
   cart.forEach((item) => {
     deliveryPrice += item.delivery;
   })
