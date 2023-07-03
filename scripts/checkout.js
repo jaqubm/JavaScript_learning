@@ -188,7 +188,7 @@ const deliveryCalc = () => {
 }
 
 //Saving current cart into sessionStorage when leaving
-window.addEventListener('beforeunload', () => {
+window.addEventListener('unload', () => {
   sessionStorage.removeItem('cart');
   sessionStorage.setItem('cart', JSON.stringify(cart));
 });

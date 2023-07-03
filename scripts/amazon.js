@@ -104,7 +104,7 @@ document.querySelectorAll('.js-add-to-card').forEach((button) => {
   });
 });
 
-window.addEventListener('beforeunload', () => {
+window.addEventListener('unload', () => {
   sessionStorage.removeItem('cart');
   sessionStorage.setItem('cart', JSON.stringify(cart));
 });
