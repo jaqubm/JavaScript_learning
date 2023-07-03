@@ -67,10 +67,7 @@ const orderSummary = () => {
       <div class="cart-item-container">
         <div class="delivery-date">
           Delivery date: 
-          ${item.delivery === 0 
-            ? `${dateFree.toLocaleDateString("en-US", { weekday: 'long' })}, ${monthNames[dateFree.getMonth()]} ${dateFree.getDate()}` 
-            : item.delivery === 499 ? `${dateFast.toLocaleDateString("en-US", { weekday: 'long' })}, ${monthNames[dateFast.getMonth()]} ${dateFast.getDate()}` 
-            : `${dateFaster.toLocaleDateString("en-US", { weekday: 'long' })}, ${monthNames[dateFaster.getMonth()]} ${dateFaster.getDate()}`}
+          ${item.delivery === 0 ? `${dateFree.toLocaleDateString("en-US", { weekday: 'long' })}, ${monthNames[dateFree.getMonth()]} ${dateFree.getDate()}` : item.delivery === 499 ? `${dateFast.toLocaleDateString("en-US", { weekday: 'long' })}, ${monthNames[dateFast.getMonth()]} ${dateFast.getDate()}` : `${dateFaster.toLocaleDateString("en-US", { weekday: 'long' })}, ${monthNames[dateFaster.getMonth()]} ${dateFaster.getDate()}`}
         </div>
 
         <div class="cart-item-details-grid">
