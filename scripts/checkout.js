@@ -1,3 +1,7 @@
+const monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+
 //Loading cart from sessionStorage
 try {
   const cartLoad = JSON.parse(sessionStorage.getItem('cart'));
@@ -15,10 +19,6 @@ try {
 const dateFree = new Date(new Date().setDate(new Date().getDate() + 7));
 const dateFast = new Date(new Date().setDate(new Date().getDate() + 5));
 const dateFaster = new Date(new Date().setDate(new Date().getDate() + 1));
-
-const monthNames = ["January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
-];
 
 let itemCounter = 0;
 let itemsPrice = 0;

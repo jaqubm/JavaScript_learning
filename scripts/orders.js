@@ -1,3 +1,7 @@
+const monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+
 //Loading cart from localStorage
 try {
   const cartLoad = JSON.parse(sessionStorage.getItem('cart'));
@@ -16,7 +20,7 @@ const cartQuantityInit = () => {
   });
   
   document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
-}
+};
 
 cartQuantityInit();
 
@@ -29,14 +33,17 @@ try {
   });
 } catch(e) {};
 
-const monthNames = ["January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
-];
-
 let ordersHTML = '';
 
 const orderFunctions = () => {
   order.forEach(subOrder => {
+    //Creating delivery data objects
+    const date = new Date(subOrder.orderDate);
+
+    const dateFree = new Date(new Date().setDate(date.getDate() + 7));
+    const dateFast = new Date(new Date().setDate(date.getDate() + 5));
+    const dateFaster = new Date(new Date().setDate(date.getDate() + 1));
+
     subOrder.cart.forEach(item => {
       document.querySelector(`.js-add-to-card-${subOrder.orderId}-${item.productId}`).addEventListener('click', () => {
         let matchingItem;
@@ -57,6 +64,15 @@ const orderFunctions = () => {
         sessionStorage.removeItem('cart');
         sessionStorage.setItem('cart', JSON.stringify(cart));
         cartQuantityInit();
+      });
+
+      document.querySelector(`.js-track-${subOrder.orderId}-${item.productId}`).addEventListener('click', () => {
+        sessionStorage.removeItem('item');
+        sessionStorage.setItem('item', JSON.stringify({
+          productId: item.productId,
+          quantity: item.quantity,
+          arrivingDate: item.delivery === 0 ? dateFree : item.delivery === 499 ? dateFast : dateFaster
+        }));
       });
     });
   });
@@ -124,7 +140,7 @@ order.forEach(subOrder => {
           </button>
         </div>
 
-        <div class="product-actions">
+        <div class="product-actions js-track-${subOrder.orderId}-${item.productId}">
           <a href="tracking.html">
             <button class="track-package-button button-secondary">
               Track package
