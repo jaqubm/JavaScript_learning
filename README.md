@@ -1,6 +1,6 @@
 # JavaScript learning - Amazon | work in progress..
 
-Recreation of Amazon main page to master JavaScript
+Recreation of Amazon to master JavaScript
 
 ## Tech stack
 
