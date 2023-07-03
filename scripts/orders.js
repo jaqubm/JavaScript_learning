@@ -23,8 +23,6 @@ try {
   orderLoad.forEach(item => {
     order.push(item);
   });
-
-  console.log(order);
 } catch(e) {};
 
 const monthNames = ["January", "February", "March", "April", "May", "June",
