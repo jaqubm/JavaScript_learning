@@ -74,12 +74,8 @@ const orderSummary = () => {
           <img class="product-image" src=${matchingProduct.image}>
 
           <div class="cart-item-details">
-            <div class="product-name">
-              ${matchingProduct.name}
-            </div>
-            <div class="product-price">
-              $${matchingProduct.priceCents / 100}
-            </div>
+            <div class="product-name">${matchingProduct.name}</div>
+            <div class="product-price">$${matchingProduct.priceCents / 100}</div>
             <div class="product-quantity">
               <span>
                 Quantity: <span class="quantity-label">${item.quantity}</span>
@@ -215,9 +211,9 @@ function createUUID() {
 //Placing order
 const placeOrder = () => {
   if(cart.length > 0) {
-    //Loading orders from sessionStorage
+    //Loading orders from localStorage
     try {
-      const orderLoad = JSON.parse(sessionStorage.getItem('order'));
+      const orderLoad = JSON.parse(localStorage.getItem('order'));
   
       while(order.length > 0) 
         order.pop();
@@ -252,16 +248,15 @@ const placeOrder = () => {
 
     //Adding order to order list
     order.push({
-      orderMonth: date.getMonth(),
-      orderDay: date.getDate(),
+      orderDate: date,
       orderId: orderId,
       orderValue: total,
       cart: cart
     });
 
-    //Saving order in sessionStorage
-    sessionStorage.removeItem('order');
-    sessionStorage.setItem('order', JSON.stringify(order));
+    //Saving order in localStorage
+    localStorage.removeItem('order');
+    localStorage.setItem('order', JSON.stringify(order));
 
     //Cleaning up cart
     while(cart.length > 0) 
