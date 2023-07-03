@@ -145,9 +145,9 @@ const deliveryCalc = () => {
     deliveryPrice += item.delivery;
   })
   
-  let totalBefore = itemsPrice + deliveryPrice;
-  let tax = totalBefore / 10;
-  let total = totalBefore + totalBefore / 10;
+  let totalBefore = Math.round(itemsPrice + deliveryPrice);
+  let tax = Math.round(totalBefore / 10);
+  let total = Math.round(totalBefore + totalBefore / 10);
 
   let summaryHTML = `
     <div class="payment-summary-title">
@@ -156,30 +156,30 @@ const deliveryCalc = () => {
 
     <div class="payment-summary-row">
       <div>Items (${itemCounter}):</div>
-      <div class="payment-summary-money">$${parseFloat(itemsPrice / 100).toFixed(2)}</div>
+      <div class="payment-summary-money">$${itemsPrice / 100}</div>
     </div>
 
     <div class="payment-summary-row">
       <div>Shipping &amp; handling:</div>
-      <div class="payment-summary-money">$${parseFloat(deliveryPrice / 100).toFixed(2)}</div>
+      <div class="payment-summary-money">$${deliveryPrice / 100}</div>
     </div>
 
     <div class="payment-summary-row subtotal-row">
       <div>Total before tax:</div>
-      <div class="payment-summary-money">$${parseFloat(totalBefore / 100).toFixed(2)}</div>
+      <div class="payment-summary-money">$${totalBefore / 100}</div>
     </div>
 
     <div class="payment-summary-row">
       <div>Estimated tax (10%):</div>
-      <div class="payment-summary-money">$${parseFloat(tax / 100).toFixed(2)}</div>
+      <div class="payment-summary-money">$${tax / 100}</div>
     </div>
 
     <div class="payment-summary-row total-row">
       <div>Order total:</div>
-      <div class="payment-summary-money">$${parseFloat(total / 100).toFixed(2)}</div>
+      <div class="payment-summary-money">$${total / 100}</div>
     </div>
 
-    <button class="place-order-button button-primary">
+    <button class="place-order-button button-primary" onclick="placeOrder()">
       Place your order
     </button>
   `;
@@ -195,3 +195,67 @@ window.addEventListener('unload', () => {
 
 orderSummary();
 deliveryCalc();
+
+function createUUID() {
+  return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+  );
+}
+
+//Placing order
+const placeOrder = () => {
+  if(cart.length > 0) {
+    //Loading orders from sessionStorage
+    try {
+      const orderLoad = JSON.parse(sessionStorage.getItem('order'));
+  
+      while(order.length > 0) 
+        order.pop();
+  
+      orderLoad.forEach(item => {
+        order.push(item);
+      });
+    } catch(e) {};
+
+    //Calculating deliveryPrice
+    let deliveryPrice = 0;
+
+    cart.forEach((item) => {
+      deliveryPrice += item.delivery;
+    })
+    
+    //Calculating orderValue
+    let total = Math.round((itemsPrice + deliveryPrice) * 1.1);
+
+    //Generating orderId
+    let orderId = createUUID();
+
+    for(let i=0; i<order.length; i++) {
+      if(order[i].orderId === orderId) {
+        orderId = createUUID();
+        i = 0;
+      }
+    }
+
+    //Creating date object to get order date
+    const date = new Date();
+
+    order.push({
+      orderMonth: date.getMonth() + 1,
+      orderDay: date.getDate(),
+      orderId: orderId,
+      orderValue: total,
+      cart: cart
+    });
+
+    //Saving order in sessionStorage
+    sessionStorage.removeItem('order');
+    sessionStorage.setItem('order', JSON.stringify(order));
+
+    //Cleaning up cart
+    while(cart.length > 0) 
+      cart.pop();
+
+    orderSummary();
+  }
+}

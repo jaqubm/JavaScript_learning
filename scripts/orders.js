@@ -15,3 +15,14 @@ cart.forEach((item) => {
 });
 
 document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+
+//Loading orders from sessionStorage
+try {
+  const orderLoad = JSON.parse(sessionStorage.getItem('order'));
+
+  orderLoad.forEach(item => {
+    order.push(item);
+  });
+
+  console.log(order);
+} catch(e) {};
