@@ -1,3 +1,4 @@
+//Loading cart from sessionStorage
 try {
   const cartLoad = JSON.parse(sessionStorage.getItem('cart'));
 
@@ -6,6 +7,7 @@ try {
   });
 } catch(e) {};
 
+//Inserting products into HTML
 let productsHTML = '';
 
 products.forEach(product => {
@@ -62,6 +64,7 @@ products.forEach(product => {
 
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
+//cartQuantity Init
 let cartQuantity = 0;
 
 cart.forEach((item) => {
@@ -70,6 +73,7 @@ cart.forEach((item) => {
 
 document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
 
+//Adding product to cart
 document.querySelectorAll('.js-add-to-card').forEach((button) => {
   button.addEventListener('click', () => {
     const productId = button.dataset.productId;
@@ -104,6 +108,7 @@ document.querySelectorAll('.js-add-to-card').forEach((button) => {
   });
 });
 
+//Saving current cart into sessionStorage when leaving
 window.addEventListener('unload', () => {
   sessionStorage.removeItem('cart');
   sessionStorage.setItem('cart', JSON.stringify(cart));

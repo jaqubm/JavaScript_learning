@@ -1,3 +1,4 @@
+//Loading cart from sessionStorage
 try {
   const cartLoad = JSON.parse(sessionStorage.getItem('cart'));
 
@@ -6,6 +7,7 @@ try {
   });
 } catch(e) {};
 
+//cartQuantity Init
 let cartQuantity = 0;
 
 cart.forEach((item) => {
