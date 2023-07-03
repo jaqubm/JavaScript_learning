@@ -8,13 +8,17 @@ try {
 } catch(e) {};
 
 //cartQuantity Init
-let cartQuantity = 0;
+const cartQuantityInit = () => {
+  let cartQuantity = 0;
 
-cart.forEach((item) => {
-  cartQuantity += item.quantity;
-});
+  cart.forEach((item) => {
+    cartQuantity += item.quantity;
+  });
+  
+  document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+}
 
-document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+cartQuantityInit();
 
 //Loading orders from sessionStorage
 try {
@@ -32,7 +36,30 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
 let ordersHTML = '';
 
 const orderFunctions = () => {
+  order.forEach(subOrder => {
+    subOrder.cart.forEach(item => {
+      document.querySelector(`.js-add-to-card-${subOrder.orderId}-${item.productId}`).addEventListener('click', () => {
+        let matchingItem;
 
+        cart.forEach((curItem) => {
+          if (item.productId === curItem.productId) {
+            matchingItem = curItem;
+          }
+        });
+
+        if (matchingItem) {
+          matchingItem.quantity += item.quantity;
+        }
+        else {
+          cart.push(item);
+        }
+
+        sessionStorage.removeItem('cart');
+        sessionStorage.setItem('cart', JSON.stringify(cart));
+        cartQuantityInit();
+      });
+    });
+  });
 };
 
 //Inserting order into HTML
@@ -91,7 +118,7 @@ order.forEach(subOrder => {
           <div class="product-quantity">
             Quantity: ${item.quantity}
           </div>
-          <button class="buy-again-button button-primary">
+          <button class="buy-again-button button-primary js-add-to-card-${subOrder.orderId}-${item.productId}">
             <img class="buy-again-icon" src="images/icons/buy-again.png">
             <span class="buy-again-message">Buy it again</span>
           </button>
@@ -111,3 +138,5 @@ order.forEach(subOrder => {
 });
 
 document.querySelector('.js-orders-grid').innerHTML = ordersHTML;
+
+orderFunctions();
