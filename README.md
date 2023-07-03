@@ -1,6 +1,6 @@
 # JavaScript learning - Amazon
 
-Recreation of Amazon to master JavaScript
+Recreation of Amazon website in fully functional way to master JavaScript
 
 ## Tech stack
 
