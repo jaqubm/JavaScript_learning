@@ -1,4 +1,4 @@
-# JavaScript learning - Amazon | work in progress..
+# JavaScript learning - Amazon
 
 Recreation of Amazon to master JavaScript
 
