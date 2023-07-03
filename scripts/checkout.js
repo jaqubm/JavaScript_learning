@@ -11,6 +11,15 @@ try {
   });
 } catch(e) {};
 
+//Creating delivery data objects
+const dateFree = new Date(new Date().setDate(new Date().getDate() + 7));
+const dateFast = new Date(new Date().setDate(new Date().getDate() + 5));
+const dateFaster = new Date(new Date().setDate(new Date().getDate() + 1));
+
+const monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+
 let itemCounter = 0;
 let itemsPrice = 0;
 
@@ -21,7 +30,7 @@ const cartFunctions = () => {
       document.querySelectorAll(`input[name="delivery-option-${item.productId}"]`).forEach((element) => {
         element.addEventListener('change', (event) => {
           item.delivery = Number(event.target.value);
-          deliveryCalc();
+          orderSummary();
         });
       });
     }
@@ -57,7 +66,11 @@ const orderSummary = () => {
     cartHTML += `
       <div class="cart-item-container">
         <div class="delivery-date">
-          Delivery date: Tuesday, June 21
+          Delivery date: 
+          ${item.delivery === 0 
+            ? `${dateFree.toLocaleDateString("en-US", { weekday: 'long' })}, ${monthNames[dateFree.getMonth()]} ${dateFree.getDate()}` 
+            : item.delivery === 499 ? `${dateFast.toLocaleDateString("en-US", { weekday: 'long' })}, ${monthNames[dateFast.getMonth()]} ${dateFast.getDate()}` 
+            : `${dateFaster.toLocaleDateString("en-US", { weekday: 'long' })}, ${monthNames[dateFaster.getMonth()]} ${dateFaster.getDate()}`}
         </div>
 
         <div class="cart-item-details-grid">
@@ -91,7 +104,7 @@ const orderSummary = () => {
               <input type="radio" ${item.delivery === 0 ? "checked" : ""} class="delivery-option-input" name="delivery-option-${item.productId}" value="0">
               <div>
                 <div class="delivery-option-date">
-                  Tuesday, June 21
+                  ${dateFree.toLocaleDateString("en-US", { weekday: 'long' })}, ${monthNames[dateFree.getMonth()]} ${dateFree.getDate()}
                 </div>
                 <div class="delivery-option-price">
                   FREE Shipping
@@ -102,7 +115,7 @@ const orderSummary = () => {
               <input type="radio" ${item.delivery === 499 ? "checked" : ""} class="delivery-option-input" name="delivery-option-${item.productId}" value="499">
               <div>
                 <div class="delivery-option-date">
-                  Wednesday, June 15
+                  ${dateFast.toLocaleDateString("en-US", { weekday: 'long' })}, ${monthNames[dateFast.getMonth()]} ${dateFast.getDate()}
                 </div>
                 <div class="delivery-option-price">
                   $4.99 - Shipping
@@ -113,7 +126,7 @@ const orderSummary = () => {
               <input type="radio" ${item.delivery === 999 ? "checked" : ""} class="delivery-option-input" name="delivery-option-${item.productId}" value="999">
               <div>
                 <div class="delivery-option-date">
-                  Monday, June 13
+                  ${dateFaster.toLocaleDateString("en-US", { weekday: 'long' })}, ${monthNames[dateFaster.getMonth()]} ${dateFaster.getDate()}
                 </div>
                 <div class="delivery-option-price">
                   $9.99 - Shipping
@@ -237,11 +250,12 @@ const placeOrder = () => {
       }
     }
 
-    //Creating date object to get order date
+    //Creating date object
     const date = new Date();
 
+    //Adding order to order list
     order.push({
-      orderMonth: date.getMonth() + 1,
+      orderMonth: date.getMonth(),
       orderDay: date.getDate(),
       orderId: orderId,
       orderValue: total,
