@@ -80,9 +80,6 @@ const orderSummary = () => {
               <span>
                 Quantity: <span class="quantity-label">${item.quantity}</span>
               </span>
-              <span class="update-quantity-link link-primary">
-                Update
-              </span>
               <span class="delete-quantity-link link-primary js-delete-${item.productId}">
                 Delete
               </span>
@@ -265,3 +262,10 @@ const placeOrder = () => {
     orderSummary();
   }
 }
+
+//TODO: Update button on products in checkout
+/*
+<span class="update-quantity-link link-primary">
+  Update
+</span>
+*/
