@@ -262,10 +262,3 @@ const placeOrder = () => {
     orderSummary();
   }
 }
-
-//TODO: Update button on products in checkout
-/*
-<span class="update-quantity-link link-primary">
-  Update
-</span>
-*/
