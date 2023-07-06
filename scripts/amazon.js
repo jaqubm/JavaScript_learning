@@ -1,6 +1,6 @@
 //Loading cart from sessionStorage
 try {
-  const cartLoad = JSON.parse(localStorage.getItem('cart'));
+  const cartLoad = JSON.parse(sessionStorage.getItem('cart'));
 
   cartLoad.forEach(item => {
     cart.push(item);
@@ -107,6 +107,6 @@ document.querySelectorAll('.js-add-to-card').forEach((button) => {
 
 //Saving current cart into sessionStorage when leaving
 window.onunload = window.onbeforeunload = () => {
-  localStorage.removeItem('cart');
-  localStorage.setItem('cart', JSON.stringify(cart));
+  sessionStorage.removeItem('cart');
+  sessionStorage.setItem('cart', JSON.stringify(cart));
 };

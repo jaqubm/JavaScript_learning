@@ -4,7 +4,7 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
 
 //Loading cart from sessionStorage
 try {
-  const cartLoad = JSON.parse(localStorage.getItem('cart'));
+  const cartLoad = JSON.parse(sessionStorage.getItem('cart'));
 
   cartLoad.forEach(item => {
     cart.push({
@@ -190,12 +190,6 @@ const deliveryCalc = () => {
   document.querySelector('.js-payment-summary').innerHTML = summaryHTML;
 }
 
-//Saving current cart into sessionStorage when leaving
-window.onunload = window.onbeforeunload = () => {
-  localStorage.removeItem('cart');
-  localStorage.setItem('cart', JSON.stringify(cart));
-};
-
 orderSummary();
 deliveryCalc();
 
@@ -262,3 +256,9 @@ const placeOrder = () => {
     orderSummary();
   }
 }
+
+//Saving current cart into sessionStorage when leaving
+window.onunload = window.onbeforeunload = () => {
+  sessionStorage.removeItem('cart');
+  sessionStorage.setItem('cart', JSON.stringify(cart));
+};

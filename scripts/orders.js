@@ -4,7 +4,7 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
 
 //Loading cart from localStorage
 try {
-  const cartLoad = JSON.parse(localStorage.getItem('cart'));
+  const cartLoad = JSON.parse(sessionStorage.getItem('cart'));
 
   cartLoad.forEach(item => {
     cart.push(item);
@@ -61,14 +61,14 @@ const orderFunctions = () => {
           cart.push(item);
         }
 
-        localStorage.removeItem('cart');
-        localStorage.setItem('cart', JSON.stringify(cart));
+        sessionStorage.removeItem('cart');
+        sessionStorage.setItem('cart', JSON.stringify(cart));
         cartQuantityInit();
       });
 
       document.querySelector(`.js-track-${subOrder.orderId}-${item.productId}`).addEventListener('click', () => {
-        localStorage.removeItem('item');
-        localStorage.setItem('item', JSON.stringify({
+        sessionStorage.removeItem('item');
+        sessionStorage.setItem('item', JSON.stringify({
           productId: item.productId,
           quantity: item.quantity,
           arrivingDate: item.delivery === 0 ? dateFree : item.delivery === 499 ? dateFast : dateFaster
