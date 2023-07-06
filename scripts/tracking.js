@@ -6,13 +6,13 @@ let trackingProduct;
 
 //Loading cart from sessionStorage
 try {
-  const cartLoad = JSON.parse(sessionStorage.getItem('cart'));
+  const cartLoad = JSON.parse(localStorage.getItem('cart'));
 
   cartLoad.forEach(item => {
     cart.push(item);
   });
 
-  trackingProduct = JSON.parse(sessionStorage.getItem('item'));
+  trackingProduct = JSON.parse(localStorage.getItem('item'));
 } catch(e) {};
 
 //cartQuantity Init
