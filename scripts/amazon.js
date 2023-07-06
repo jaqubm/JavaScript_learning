@@ -106,7 +106,7 @@ document.querySelectorAll('.js-add-to-card').forEach((button) => {
 });
 
 //Saving current cart into sessionStorage when leaving
-window.addEventListener('beforeunload', () => {
+window.onunload = window.onbeforeunload = () => {
   sessionStorage.removeItem('cart');
   sessionStorage.setItem('cart', JSON.stringify(cart));
-});
+};
